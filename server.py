@@ -5,9 +5,6 @@ from flask import Flask, jsonify
 from config import Config
 # For dev
 from flask.ext.script import Manager, Server
-# Set the path
-import os, sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from user import user_api 
 from room import room_api 

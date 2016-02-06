@@ -15,8 +15,8 @@ def auth():
         username = request.form["username"]
         password = GetHash( request.form["password"] )
         user = auth_db.find_one({
-                        "username":username, 
-                        "password":password
+                            "username":username, 
+                            "password":password
                         })
         if not user:
             return jsonify(msg="Access Denied"), 401
