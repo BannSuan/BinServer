@@ -38,6 +38,7 @@ def auth():
     if request.method == 'PUT': # Register
         username = request.form["username"]
         password = GetHash( request.form["password"] )
+        fullname = request.form["fullname"]
         email = request.form["email"]
         user = auth_db.find_one({
                             "username":username, 
