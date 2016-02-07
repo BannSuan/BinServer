@@ -15,7 +15,7 @@ room_api = Blueprint('room_api', __name__)
 @room_api.route('/room', methods=['GET', 'POST', 'PUT'])
 @room_api.route('/room/<id>', methods=['GET'])
 def room(id=None):
-    key = request.headers.get('key')
+    key = request.headers.get('x-key')
     user = KeyStore.search(key)
     if not user:
         return jsonify(status="fail", msg="UNAUTHORIZED", data={}), 401

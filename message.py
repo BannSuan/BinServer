@@ -15,7 +15,7 @@ message_api = Blueprint('message_api', __name__)
 @message_api.route('/message', methods=['GET', 'POST', 'PUT'])
 @message_api.route('/message/<id>', methods=['GET', 'POST'])
 def message(id=None):
-    key = request.headers.get('key')
+    key = request.headers.get('x-key')
     user = KeyStore.search(key)
     if not user:
         return jsonify(status="fail", msg="UNAUTHORIZED", data={}), 401

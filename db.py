@@ -4,7 +4,6 @@
 from pymongo import MongoClient
 import hashlib, binascii
 from config import Config
-from werkzeug.contrib.cache import SimpleCache
 import random
 
 client = MongoClient()
