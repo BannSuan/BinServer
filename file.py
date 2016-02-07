@@ -28,9 +28,13 @@ def file(file_id=None):
 
     if request.method == 'POST':
         file = request.files['file']
+        room = request.form['room']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(Config['UPLOAD_FOLDER'], filename))
+            fileid = file_db.insert_one({"filename": filename, "room":room})
+            return jsonify(status="ok", msg="Yippee!", data={})
+        return jsonify(status="fail", msg="Not Allowed Extension", data={fileid,})
 
     if request.method == 'GET':
         if not file_id:
