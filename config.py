@@ -14,6 +14,6 @@ Config = {
     'DATABASE': "testBinServer",
 
     # upload
-    'UPLOAD_FOLDER':'uploads/'
+    'UPLOAD_FOLDER': 'uploads/',
     'ALLOWED_EXTENSIONS': set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']),
 }
