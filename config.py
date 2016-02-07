@@ -4,12 +4,16 @@
 Config = {
     'DEBUG': True,
     # Server
-    'host': "0.0.0.0",
-    'port': 5000,
+    'HOST': "0.0.0.0",
+    'PORT': 5000,
 
     # Hash salt
-    'salt': "adasdasdalknaglnalrgnaoje;rgnjlearngnae",
+    'SALT': "adasdasdalknaglnalrgnaoje;rgnjlearngnae",
 
     # DB name
     'DATABASE': "testBinServer",
+
+    # upload
+    'UPLOAD_FOLDER':'uploads/'
+    'ALLOWED_EXTENSIONS': set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']),
 }
