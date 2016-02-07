@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint, abort, request, session, jsonify
-from db import DB, GetUserFromToken, GetHash
+from db import DB, GetHash, KeyStore, GenerateKey
 
 from config import Config
 
@@ -20,17 +20,12 @@ def auth():
                         })
         if not user:
             return jsonify(msg="Access Denied"), 401
-        token = 123 # Generate new Token or some OAuth Spec
-        result auth_db.update_one({"username":username},{
-                "$set": {
-                    "token": token
-                },
-                "$currentDate": {"lastModified": True}
-            })
+        key = GenerateKey()
+        KeyStore.save(key, user)
         if result.modified_count != 1:
             return jsonify(msg="Try Again Later"), 500
-        return jsonify(token=token)
-        
+        return jsonify(key=key)
+
     if request.method == 'PUT': # Register
         username = request.form["username"]
         password = GetHash( request.form["password"] )
