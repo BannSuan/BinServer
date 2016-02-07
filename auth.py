@@ -30,10 +30,10 @@ def auth():
                             "password":password
                         })
         if not user:
-            return jsonify(msg="Access Denied"), 401
+            return jsonify(status="ok", msg="Authenticate failed", data={}), 401
         key = GenerateKey()
         KeyStore.save(key, user)
-        return jsonify(key=key)
+        return jsonify(status="ok", msg="Welcome back, {0}.".format(username), data={"key":key})
 
     if request.method == 'PUT': # Register
         username = request.form["username"]
@@ -43,7 +43,7 @@ def auth():
                             "username":username, 
                         })
         if user:
-            return jsonify(status="fail", msg="Username \"{0}\" already exist".format(username), data={})
+            return jsonify(status="fail", msg="Username {0} already exist".format(username), data={})
         result = auth_db.insert_one({"username":username, "password":password})
         if not result:
             return jsonify(status="fail", data="DB Fail"), 500
