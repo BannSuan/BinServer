@@ -17,19 +17,26 @@ def GenerateKey(length=32):
 
 def GetHash(password):
     salt = Config['salt']
-    dk = hashlib.pbkdf2_hmac('sha256', password, salt, 10)
+    dk = hashlib.pbkdf2_hmac('sha256', password, salt, 2)
     return binascii.hexlify(dk)
 
 class KeyStorage(object):
     def __init__(self):
         super(KeyStorage, self).__init__()
-        self.cache = SimpleCache()
+        self.cache = dict()
 
     def search(self, key):
         user = self.cache.get(key)
         return user
 
-    def save(self, key, user, timeout=60*60):
-        self.cache.set(key, user, timeout=timeout)
+    def save(self, key, user):
+        self.cache[key] = user
+        
+    def delete(self, key):
+        try:
+            del self.cache[key]
+        except Exception, e:
+            pass
+        
 
 KeyStore = KeyStorage()

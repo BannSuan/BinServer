@@ -1,6 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
+"""
+    * Message API
+
+"""
+
 from flask import Blueprint, abort, request, session, jsonify
 from db import DB, KeyStore
 
@@ -13,7 +18,6 @@ def message(id=None):
     key = request.headers.get('key')
     user = KeyStore.search(key)
     if not user:
-        return jsonify(), 401
-    
+        return jsonify(status="fail", msg="UNAUTHORIZED", data={}), 401
 
     return NotImplemented()

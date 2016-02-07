@@ -6,24 +6,25 @@ from config import Config
 # For dev
 from flask.ext.script import Manager, Server
 
-from user import user_api 
-from room import room_api 
-from message import message_api 
-from auth import auth_api 
-
+import user, room, message, auth
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return jsonify(msg="Hello World!")
+    return jsonify(status="ok", msg="HI! Nice to meet you. :D", data={})
+
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify(msg="Find something?")
+    return jsonify(status="fail", msg="What are you looking for?", data={})
 
-app.register_blueprint( user_api )
-app.register_blueprint( room_api )
-app.register_blueprint( message_api )
-app.register_blueprint( auth_api )
+@app.errorhandler(500)
+def not_found(error):
+    return jsonify(status="fail", msg="Ops! something went wrong.", data={})
+
+app.register_blueprint( user.user_api )
+app.register_blueprint( room.room_api )
+app.register_blueprint( message.message_api )
+app.register_blueprint( auth.auth_api )
 
 # Turn on debugger by default and reloader
 manager = Manager(app)
