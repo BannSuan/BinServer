@@ -5,9 +5,9 @@
 # Descripter: API to use pongsakorn library
 # Date 09/02/2016
 
-from protocal import protocal
-from mException import MethodException
-from user import user
+from module.protocol import protocol
+from mException import MethodException, BuildException
+from module import user
 
 USER = 0
 
@@ -15,15 +15,15 @@ def build(t):
 	global USER
 
 	if (t==USER):
-		return user()
+		return user.main()
 	else:
 		raise BuildException("type not found")
 
 
 def execute(obj, request, user, auth=["GET", "POST", "PUT", "DELETE"]):
 
-	if not isinstance(obj, protocal):
-		raise ProtocalException("please extend protocal class")
+	if not isinstance(obj, protocol):
+		raise ProtocalException("please extend protocol class")
 
 	if request.method=="GET":
 		if "GET" in auth and not user:

@@ -5,9 +5,9 @@
 # Descripter: User imprement
 # Date 09/02/2016
 
-from protocal import protocal
+from protocol import protocol
 
-class user(protocal):
+class main(protocol):
 	def get(self, request):
 		return "eiei"
 
