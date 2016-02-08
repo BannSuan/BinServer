@@ -26,6 +26,7 @@ app.register_blueprint( room.room_api )
 app.register_blueprint( message.message_api )
 app.register_blueprint( auth.auth_api )
 
+
 # Turn on debugger by default and reloader
 manager = Manager(app)
 manager.add_command("runserver", Server(

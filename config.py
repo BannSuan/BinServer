@@ -14,10 +14,15 @@ Config = {
     'DATABASE': "testBinServer",
 
     "google": {
-        "id": "125904001864-03ujaq1gmejogtpfcpl05btsnjboce5r.apps.googleusercontent.com"
+        "id": "125904001864-03ujaq1gmejogtpfcpl05btsnjboce5r.apps.googleusercontent.com",
         "secret": "eHXp8y0acdqFOuE0G24CYS65"
     },
 
     'UPLOAD_FOLDER': 'uploads/',
-    'ALLOWED_EXTENSIONS': set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+    'ALLOWED_EXTENSIONS': set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']),
+
+    "error": {
+        401: "UNAUTHORIZED",
+        410: "METHOD NOT FOUND"
+    }
 }
