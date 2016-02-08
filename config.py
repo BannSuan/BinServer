@@ -4,11 +4,11 @@
 Config = {
     'DEBUG': True,
     # Server
-    'host': "0.0.0.0",
-    'port': 5000,
+    'HOST': "0.0.0.0",
+    'PORT': 5000,
 
     # Hash salt
-    'salt': "adasdasdalknaglnalrgnaoje;rgnjlearngnae",
+    'SALT': "adasdasdalknaglnalrgnaoje;rgnjlearngnae",
 
     # DB name
     'DATABASE': "testBinServer",
@@ -16,5 +16,8 @@ Config = {
     "google": {
         "id": "125904001864-03ujaq1gmejogtpfcpl05btsnjboce5r.apps.googleusercontent.com"
         "secret": "eHXp8y0acdqFOuE0G24CYS65"
-    }
+    },
+
+    'UPLOAD_FOLDER': 'uploads/',
+    'ALLOWED_EXTENSIONS': set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 }

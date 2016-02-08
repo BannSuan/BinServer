@@ -15,7 +15,7 @@ def GenerateKey(length=32):
     return ''.join([ random.choice("0123456789ABCDEF") for i in range(length)])
 
 def GetHash(password):
-    salt = Config['salt']
+    salt = Config['SALT']
     dk = hashlib.pbkdf2_hmac('sha256', password, salt, 2)
     return binascii.hexlify(dk)
 

@@ -29,14 +29,11 @@ app.register_blueprint( auth.auth_api )
 # Turn on debugger by default and reloader
 manager = Manager(app)
 manager.add_command("runserver", Server(
-    use_debugger = True,
-    use_reloader = True,
-    host=Config['host'],
-    port=Config['port'])
+    use_debugger = Config['DEBUG'],
+    use_reloader = Config['DEBUG'],
+    host=Config['HOST'],
+    port=Config['PORT'])
 )
 
 if __name__ == "__main__":
-    if Config['DEBUG']:
-        manager.run()
-    else:
-        app.run(host=Config['host'], port=Config['port'])
+    manager.run()
