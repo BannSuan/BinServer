@@ -12,4 +12,9 @@ Config = {
 
     # DB name
     'DATABASE': "testBinServer",
+
+    "google": {
+        "id": "125904001864-03ujaq1gmejogtpfcpl05btsnjboce5r.apps.googleusercontent.com"
+        "secret": "eHXp8y0acdqFOuE0G24CYS65"
+    }
 }
