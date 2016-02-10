@@ -4,7 +4,7 @@
 """
     * User API
 
-"""
+""" 
 
 from flask import Blueprint, abort, request, session, jsonify
 from db import DB, KeyStore
@@ -19,5 +19,5 @@ def user():
     if not user:
         abort(401)
 
-    return NotImplemented()
+    abort(405)
     

@@ -6,12 +6,17 @@ from config import Config
 # For dev
 from flask.ext.script import Manager, Server
 
-import user, room, message, auth
+import user, room, message, auth, storage
 app = Flask(__name__)
 
+# error handler
 @app.route("/")
 def hello():
     return jsonify(**Config['ERROR'][0]), 200
+
+@app.errorhandler(400)
+def e401(error):
+    return jsonify(**Config['ERROR'][400]), 400
 
 @app.errorhandler(401)
 def e401(error):
@@ -33,14 +38,14 @@ def e410(error):
 def e500(error):
     return jsonify(**Config['ERROR'][500]), 500
 
-
+# register api's blueprint
 app.register_blueprint( user.user_api )
 app.register_blueprint( room.room_api )
 app.register_blueprint( message.message_api )
 app.register_blueprint( auth.auth_api )
+app.register_blueprint( storage.storage_api )
 
-
-# Turn on debugger by default and reloader
+# Server config
 manager = Manager(app)
 manager.add_command("runserver", Server(
     use_debugger = Config['DEBUG'],

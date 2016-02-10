@@ -16,8 +16,9 @@ def GenerateKey(length=32):
 
 def GetHash(password):
     salt = Config['SALT']
-    dk = hashlib.pbkdf2_hmac('sha256', password, salt, 2)
-    return binascii.hexlify(dk)
+    dk = hashlib.pbkdf2_hmac('sha256', password, salt, 1)
+    return password
+    # return binascii.hexlify(dk)
 
 class KeyStorage(object):
     def __init__(self):

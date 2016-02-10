@@ -26,10 +26,11 @@ Config = {
 
     # Error Message
     'ERROR': {
-        0: {'status':'ok', 'message':"HI! Nice to meet you. :D", 'data':{}},
-        401: {'status':'fail', 'message':"UNAUTHORIZED", 'data':{}},
-        404: {'status':'fail', 'message':"NOT FOUND", 'data':{}},
-        405: {'status':'fail', 'message':"METHOD NOT ALLOWED", 'data':{}},
-        500: {'status':'fail', 'message':"Ops! something went wrong.", 'data':{}},
+        0: {'status':'ok', 'message':"HI! Nice to meet you. :D"},
+        400: {'status':'fail', 'message':"BAD REQUEST"},
+        401: {'status':'fail', 'message':"UNAUTHORIZED"},
+        404: {'status':'fail', 'message':"NOT FOUND"},
+        405: {'status':'fail', 'message':"METHOD NOT ALLOWED"},
+        500: {'status':'fail', 'message':"Ops! something went wrong."},
     }
 }
