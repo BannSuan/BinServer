@@ -3,9 +3,10 @@
 
 Config = {
     'DEBUG': True,
+    'DEBUG_PORT': 5000,
     # Server
     'HOST': "0.0.0.0",
-    'PORT': 5000,
+    'PORT': 8888,
 
     # Hash salt
     'SALT': "adasdasdalknaglnalrgnaoje;rgnjlearngnae",
@@ -13,16 +14,22 @@ Config = {
     # DB name
     'DATABASE': "testBinServer",
 
+    # Google API
     "GOOGLE": {
-        "id": "125904001864-03ujaq1gmejogtpfcpl05btsnjboce5r.apps.googleusercontent.com",
-        "secret": "eHXp8y0acdqFOuE0G24CYS65"
+        "ID": "125904001864-03ujaq1gmejogtpfcpl05btsnjboce5r.apps.googleusercontent.com",
+        "SECRET": "eHXp8y0acdqFOuE0G24CYS65"
     },
 
+    # Upload
     'UPLOAD_FOLDER': 'uploads/',
     'ALLOWED_EXTENSIONS': set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']),
 
-    "ERROR": {
-        401: "UNAUTHORIZED",
-        410: "METHOD NOT FOUND"
+    # Error Message
+    'ERROR': {
+        0: {'status':'ok', 'message':"HI! Nice to meet you. :D", 'data':{}},
+        401: {'status':'fail', 'message':"UNAUTHORIZED", 'data':{}},
+        404: {'status':'fail', 'message':"NOT FOUND", 'data':{}},
+        405: {'status':'fail', 'message':"METHOD NOT ALLOWED", 'data':{}},
+        500: {'status':'fail', 'message':"Ops! something went wrong.", 'data':{}},
     }
 }

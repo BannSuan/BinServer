@@ -24,7 +24,7 @@ def file(file_id=None):
     key = request.headers.get('x-key')
     user = KeyStore.search(key)
     if not user:
-        return jsonify(status="fail", msg="UNAUTHORIZED", data={}), 401
+        abort(401)
 
     if request.method == 'POST':
         file = request.files['file']
@@ -33,12 +33,12 @@ def file(file_id=None):
             filename = secure_filename(file.filename)
             file.save(os.path.join(Config['UPLOAD_FOLDER'], filename))
             fileid = file_db.insert_one({"filename": filename, "room":room})
-            return jsonify(status="ok", msg="Yippee!", data={})
-        return jsonify(status="fail", msg="Not Allowed Extension", data={fileid,})
+            return jsonify(status="ok", message="Yippee!", data={fileid,})
+        return jsonify(status="fail", msg="Not Allowed Extension", data={})
 
     if request.method == 'GET':
         if not file_id:
             return send_from_directory(Config['UPLOAD_FOLDER'], file_id)
-        return jsonify(status="fail", msg="File Not Found", data={})
+        return jsonify(status="fail", message="File Not Found", data={})
 
 

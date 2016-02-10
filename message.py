@@ -18,6 +18,6 @@ def message(id=None):
     key = request.headers.get('x-key')
     user = KeyStore.search(key)
     if not user:
-        return jsonify(status="fail", msg="UNAUTHORIZED", data={}), 401
+        abort(401)
 
     return NotImplemented()

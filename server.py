@@ -11,15 +11,28 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return jsonify(status="ok", msg="HI! Nice to meet you. :D", data={})
+    return jsonify(**Config['ERROR'][0]), 200
+
+@app.errorhandler(401)
+def e401(error):
+    return jsonify(**Config['ERROR'][401]), 401
 
 @app.errorhandler(404)
-def not_found(error):
-    return jsonify(status="fail", msg="What are you looking for?", data={})
+def e404(error):
+    return jsonify(**Config['ERROR'][404]), 404
+
+@app.errorhandler(405)
+def e405(error):
+    return jsonify(**Config['ERROR'][405]), 405
+
+@app.errorhandler(410)
+def e410(error):
+    return jsonify(**Config['ERROR'][410]), 410
 
 @app.errorhandler(500)
-def not_found(error):
-    return jsonify(status="fail", msg="Ops! something went wrong.", data={})
+def e500(error):
+    return jsonify(**Config['ERROR'][500]), 500
+
 
 app.register_blueprint( user.user_api )
 app.register_blueprint( room.room_api )
@@ -32,8 +45,8 @@ manager = Manager(app)
 manager.add_command("runserver", Server(
     use_debugger = Config['DEBUG'],
     use_reloader = Config['DEBUG'],
-    host=Config['HOST'],
-    port=Config['PORT'])
+    host = Config['HOST'],
+    port = (Config['PORT'] if not Config['DEBUG'] else Config['DEBUG_PORT']) ),
 )
 
 if __name__ == "__main__":
