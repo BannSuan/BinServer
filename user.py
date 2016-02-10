@@ -12,7 +12,7 @@ import model.users
 
 user_api = Blueprint('user_api', __name__)
 
-@user_api.route('/user', methods=['GET', 'POST', 'PUT'])
+@user_api.route('/user', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @user_api.route('/user/<uid>', methods=['GET'])
 def user(uid=None):
     key = request.headers.get('x-key')
@@ -64,3 +64,13 @@ def user(uid=None):
             return jsonify(status="ok", message="", data={})
         else:
             abort(404)
+
+    elif request.method == 'DELETE':
+        key = request.headers.get('x-key')
+        user = KeyStore.search(key)
+
+        if not user:
+            abort(401)
+
+        KeyStore.delete(key)
+        return jsonify(status="ok", message="", data={})
