@@ -13,8 +13,8 @@ from bson.objectid import ObjectId
 room_db = DB['rooms']
 room_api = Blueprint('room_api', __name__)
 
-@room_api.route('/room', methods=['GET', 'POST', 'PUT'])
-@room_api.route('/room/<oid>', methods=['GET'])
+@room_api.route('/room', methods=['GET', 'POST'])
+@room_api.route('/room/<oid>', methods=['GET','DELETE','PUT'])
 def room(oid=None):
     key = request.headers.get('x-key')
     user = KeyStore.search(key)
@@ -30,12 +30,13 @@ def room(oid=None):
 
     # get all user's room
     if oid is None and request.method is 'GET':
-        rooms = room_db.find({"_id":{"$in":user["rooms"]}})
+        rooms = room_db.find({"_id":{"$in":user["room_id"]}})
         return jsonify(status='OK', message='', data=[])
 
     # create new room
     if request.method is 'POST':
-        pass
+        title = request.form['title']
+        
 
     # add user to room
     if request.method is 'PUT':
