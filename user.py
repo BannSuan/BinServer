@@ -14,7 +14,7 @@ user_api = Blueprint('user_api', __name__)
 
 @user_api.route('/user', methods=['GET', 'POST', 'PUT'])
 @user_api.route('/user/<uid>', methods=['GET'])
-def user():
+def user(uid=None):
     key = request.headers.get('x-key')
     user = KeyStore.search(key)
 
