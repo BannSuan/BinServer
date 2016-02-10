@@ -7,9 +7,8 @@
 """
 
 from flask import Blueprint, abort, request, session, jsonify
-from db import DB, KeyStore
+from db import KeyStore
 
-user_db = DB['users']
 user_api = Blueprint('user_api', __name__)
 
 @user_api.route('/user', methods=['GET', 'POST', 'PUT'])
@@ -25,5 +24,3 @@ def user():
 
     elif request.method == 'POST':
         token = request.form.args["token"]
-
-        
