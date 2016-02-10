@@ -29,12 +29,12 @@ def storage(file_id=None):
 
     if request.method is 'POST':
         file = request.files['file']
-        room = request.form['room']
+        room_id = request.form['room_id']
         if file and allowed_file(file.filename):
             # secure filename
             filename = secure_filename(file.filename)
             # get id from document id
-            ret = file_db.insert_one({"filename": filename, "room":room})
+            ret = file_db.insert_one({"filename": filename, "room": ObjectID(room_id)})
             file_id = str(ret['_id'])
             # save file
             file.save(os.path.join(Config['UPLOAD_FOLDER'], file_id+find_name))

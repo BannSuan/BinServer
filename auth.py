@@ -33,7 +33,7 @@ def auth():
             return jsonify(status="ok", message="Authenticate failed", data={}), 401
         key = GenerateKey()
         KeyStore.save(key, user)
-        return jsonify(status="ok", message="Welcome back, {0}.".format(username), data={"key":key})
+        return jsonify(status="ok", message="Welcome back, {0}.".format(username), data={"key":key, "user":user})
 
     if request.method == 'PUT': # Register
         username = request.form["username"]
