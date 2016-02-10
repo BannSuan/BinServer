@@ -38,7 +38,7 @@ def storage(file_id=None):
             # save file
             file.save(os.path.join(Config['UPLOAD_FOLDER'], filename))
             return jsonify(status="ok", message="Yippee!", data={'file_id':fileid,})
-        return jsonify(status="fail", msg="EXTENSION NOT AllOWED ")
+        return jsonify(status="fail", message="EXTENSION NOT AllOWED ")
 
     if request.method is 'GET':
         if file_id is not None:
