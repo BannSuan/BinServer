@@ -9,6 +9,7 @@
 from flask import Blueprint, abort, request, session, jsonify, send_from_directory, url_for
 from werkzeug import secure_filename
 from db import DB, KeyStore
+from bson.objectid import ObjectId
 import os
 
 storage_db = DB['files']
@@ -28,22 +29,24 @@ def storage(file_id=None):
 
     if request.method is 'POST':
         file = request.files['file']
-        room = request.form['room']
+        room_id = request.form['room_id']
         if file and allowed_file(file.filename):
             # secure filename
             filename = secure_filename(file.filename)
             # get id from document id
-            ret = file_db.insert_one({"filename": filename, "room":room})
-            file_id = ret['_id']
+            ret = file_db.insert_one({"filename": filename, "room": ObjectID(room_id)})
+            file_id = str(ret['_id'])
             # save file
-            file.save(os.path.join(Config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join(Config['UPLOAD_FOLDER'], file_id+find_name))
             return jsonify(status="ok", message="Yippee!", data={'file_id':fileid,})
         return jsonify(status="fail", message="EXTENSION NOT AllOWED ")
 
     if request.method is 'GET':
         if file_id is not None:
-            file_name = ''
-            return send_from_directory(Config['UPLOAD_FOLDER'], file_id)
-        return jsonify(status="fail", message="FILE NOT FOUND")
+            file = storage_db.find_one({'_id': ObjectID(file_id)})
+            if not file:
+                return jsonify(status="fail", message="FILE NOT FOUND")
+            return send_from_directory(Config['UPLOAD_FOLDER'], str(file['_id'])+file['filename'])
+        abort(400)
 
 

@@ -15,28 +15,28 @@ room_api = Blueprint('room_api', __name__)
 
 @room_api.route('/room', methods=['GET', 'POST'])
 @room_api.route('/room/<oid>', methods=['GET','DELETE','PUT'])
-def room(oid=None):
+def room(rid=None):
     key = request.headers.get('x-key')
     user = KeyStore.search(key)
     if not user:
         abort(401)
 
     # get room info
-    if oid is not None and request.method is 'GET':
+    if rid is not None and request.method is 'GET':
         if ObjectId(oid) in user['rooms']:
-            room = room_db.findOne({'_id': ObjectId(oid)})
+            room = room_db.findOne({'_id': ObjectId(rid)})
             return jsonify(status='OK', message='', data=room)
         abort(400)
 
     # get all user's room
-    if oid is None and request.method is 'GET':
+    if rid is None and request.method is 'GET':
         rooms = room_db.find({"_id":{"$in":user["room_id"]}})
         return jsonify(status='OK', message='', data=[])
 
     # create new room
     if request.method is 'POST':
         title = request.form['title']
-        
+
 
     # add user to room
     if request.method is 'PUT':
