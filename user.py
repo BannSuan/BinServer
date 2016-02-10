@@ -19,6 +19,8 @@ def user():
     user = KeyStore.search(key)
 
     if uid is not None:
+        if not user:
+            abort(401)
 
         if uid=="me":
             uid = user["_id"]
