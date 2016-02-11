@@ -9,6 +9,7 @@
 from flask import Blueprint, abort, request, session, jsonify
 from db import DB, KeyStore
 from bson.objectid import ObjectId
+import model.rooms
 
 room_db = DB['rooms']
 room_api = Blueprint('room_api', __name__)
@@ -24,14 +25,16 @@ def room(rid=None):
     # get room info
     if rid and request.method is 'GET':
         if ObjectId(oid) in user['rooms']:
-            room = room_db.findOne({'_id': ObjectId(rid)})
+            room = room_db.get_by_id(rid)
             return jsonify(status='OK', message='', data=room)
         abort(400)
 
     # get all user's room
-    if rid and request.method is 'GET':
-        rooms = room_db.find({"_id":{"$in":user["room_id"]}})
-        return jsonify(status='OK', message='', data=[])
+    if not rid and request.method is 'GET':
+        skip = request.form.get('skip',0)
+        limit = request.form.get('limit',10)
+        rooms = model.rooms.get(rid, skip=skip, limit=limit)
+        return jsonify(status='OK', message='', data=rooms)
 
     # create new room
     if request.method is 'POST':
