@@ -22,14 +22,14 @@ def room(rid=None):
         abort(401)
 
     # get room info
-    if rid is not None and request.method is 'GET':
+    if rid and request.method is 'GET':
         if ObjectId(oid) in user['rooms']:
             room = room_db.findOne({'_id': ObjectId(rid)})
             return jsonify(status='OK', message='', data=room)
         abort(400)
 
     # get all user's room
-    if rid is None and request.method is 'GET':
+    if rid and request.method is 'GET':
         rooms = room_db.find({"_id":{"$in":user["room_id"]}})
         return jsonify(status='OK', message='', data=[])
 

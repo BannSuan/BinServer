@@ -18,7 +18,7 @@ def user(uid=None):
     key = request.headers.get('x-key')
     user = KeyStore.search(key)
 
-    if uid is not None:
+    if uid:
         if not user:
             abort(401)
 
