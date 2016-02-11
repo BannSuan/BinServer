@@ -10,6 +10,7 @@ from flask import Blueprint, abort, request, session, jsonify
 from db import DB, KeyStore
 from bson.objectid import ObjectId
 import model.rooms
+import model.users
 
 room_db = DB['rooms']
 room_api = Blueprint('room_api', __name__)
@@ -26,7 +27,8 @@ def room(rid=None):
     if rid and request.method is 'GET':
         if ObjectId(oid) in user['rooms']:
             room = model.rooms.get_by_id(rid)
-            return jsonify(status='OK', message='', data=room)
+            users = model.users.get_by_room(rid)
+            return jsonify(status='OK', message='', data={'room':room, 'users':users)
         abort(400)
 
     # get all user's room

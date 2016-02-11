@@ -48,3 +48,10 @@ def search(search, skip=0, limit=10):
 
 def get(uid):
 	return users.find_one({'_id': ObjectID(uid)})
+
+def get_by_room(rid):
+    return list(users.find({
+                'room_id':{
+                    '$in':[ObjectID(rid)] 
+                }
+            })).sort('create_ts', pymongo.DESCENDING))
