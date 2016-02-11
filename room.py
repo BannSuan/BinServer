@@ -25,7 +25,7 @@ def room(rid=None):
     # get room info
     if rid and request.method is 'GET':
         if ObjectId(oid) in user['rooms']:
-            room = room_db.get_by_id(rid)
+            room = model.rooms.get_by_id(rid)
             return jsonify(status='OK', message='', data=room)
         abort(400)
 
