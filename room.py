@@ -39,16 +39,28 @@ def room(rid=None):
     # create new room
     if request.method is 'POST':
         title = request.form['title']
+        user_id = user['_id'].to_s
+        pin = request.form['pin']
+        ret = model.rooms.add(title=title, user_id=user_id, pin=pin)
+        return jsonify(status='ok', message="created", data={'room_id':ret})
 
 
     # add user to room
-    if request.method is 'PUT':
-        pass
+    if oid and request.method is 'PUT':
+        user_id = request.form['user_id']
+        ret = model.rooms.add_user(room_id=oid, user_id=user_id)
+        if ret:
+            return jsonify(status='ok', message='', data={})
+        else
+            abort(400)
 
     # user leave room
-    if request.method is 'DELETE':
-        pass
+    if oid and request.method is 'DELETE':
+        user_id = request.form['user_id']
+        ret = model.rooms.remove_user(room_id=oid, user_id=user_id)
+        if ret:
+            return jsonify(status='ok', message='', data={})
+        else
+            abort(400)
 
     abort(405)
-
-    return NotImplemented()
