@@ -54,4 +54,4 @@ def get_by_room(rid):
                 'room_id':{
                     '$in':[ObjectID(rid)] 
                 }
-            })).sort('create_ts', pymongo.DESCENDING))
+            })).sort('create_ts', pymongo.DESCENDING)

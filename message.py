@@ -19,5 +19,5 @@ def message(id=None):
     user = KeyStore.search(key)
     if not user:
         abort(401)
+
     
-    return NotImplemented()

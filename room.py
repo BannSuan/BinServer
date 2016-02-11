@@ -28,18 +28,18 @@ def room(rid=None):
         if ObjectId(oid) in user['rooms']:
             room = model.rooms.get_by_id(rid)
             users = model.users.get_by_room(rid)
-            return jsonify(status='OK', message='', data={'room':room, 'users':users)
+            return jsonify(status='OK', message='', data={'room':room, 'users':users})
         abort(400)
 
     # get all user's room
-    if not rid and request.method is 'GET':
+    elif not rid and request.method is 'GET':
         skip = request.form.get('skip',0)
         limit = request.form.get('limit',10)
         rooms = model.rooms.get(rid, skip=skip, limit=limit)
         return jsonify(status='OK', message='', data=rooms)
 
     # create new room
-    if request.method is 'POST':
+    elif request.method is 'POST':
         title = request.form['title']
         user_id = user['_id'].to_s
         pin = request.form['pin']
@@ -48,21 +48,21 @@ def room(rid=None):
 
 
     # add user to room
-    if oid and request.method is 'PUT':
+    elif oid and request.method is 'PUT':
         user_id = request.form['user_id']
         ret = model.rooms.add_user(room_id=oid, user_id=user_id)
         if ret:
             return jsonify(status='ok', message='', data={})
-        else
+        else:
             abort(400)
 
     # user leave room
-    if oid and request.method is 'DELETE':
+    elif oid and request.method is 'DELETE':
         user_id = request.form['user_id']
         ret = model.rooms.remove_user(room_id=oid, user_id=user_id)
         if ret:
             return jsonify(status='ok', message='', data={})
-        else
+        else:
             abort(400)
 
     abort(405)
