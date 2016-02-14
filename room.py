@@ -28,12 +28,10 @@ def room(rid=None):
         if ObjectId(oid) in user['rooms']:
             room = model.rooms.get_by_id(rid)
             users = model.users.get_by_room(room['users_id'])
-            message = model.messages.get_by_room(rid)
             return jsonify( status='OK', 
                             message='', 
                             data={'room':room, 
-                                'users':users, 
-                                'messages':messages
+                                'users':users
                             })
         abort(400)
 
@@ -66,7 +64,6 @@ def room(rid=None):
     elif rid and request.method is 'DELETE':
         user_id = request.form['user_id']
         ret = model.rooms.remove_user(room_id=oid, user_id=user_id)
-        model.users.leave(rid)
         if ret:
             return jsonify(status='ok', message='', data={})
         else:
