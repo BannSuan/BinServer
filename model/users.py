@@ -51,7 +51,7 @@ def get(uid):
 
 def get_by_room(rid):
     return list(users.find({
-                'room_id':{
-                    '$in':[ObjectID(rid)] 
+                '_id':{
+                    '$in':rid 
                 }
             })).sort('create_ts', pymongo.DESCENDING)
