@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from pymongo import MongoClient
-import hashlib, binascii
 from config import Config
 import random
+import bcrypt
+import hmac
 
 client = MongoClient()
 
@@ -15,10 +16,12 @@ def GenerateKey(length=32):
     return ''.join([ random.choice("0123456789ABCDEF") for i in range(length)])
 
 def GetHash(password):
-    salt = Config['SALT']
-    dk = hashlib.pbkdf2_hmac('sha256', password, salt, 1)
+    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    # return hashed
     return password
-    # return binascii.hexlify(dk)
+
+def validPassword(password, hashed):
+    return hmac.compare_digest(bcrypt.hashpw(password, hashed), hashed)
 
 class KeyStorage(object):
     def __init__(self):

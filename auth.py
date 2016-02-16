@@ -14,7 +14,7 @@
 """
 
 from flask import Blueprint, abort, request, session, jsonify
-from db import DB, GetHash, KeyStore, GenerateKey
+from db import DB, GetHash, KeyStore, GenerateKey, validPassword
 from config import Config
 
 auth_db = DB['users']
@@ -26,11 +26,11 @@ def auth():
         username = request.form["username"]
         password = GetHash( request.form["password"] )
         user = auth_db.find_one({
-                            "username":username, 
-                            "password":password
+                            "username":username,
                         })
-        if not user:
+        if not user or not validPasssword(password, user['password']):
             return jsonify(status="ok", message="Authenticate failed", data={}), 401
+
         key = GenerateKey()
         KeyStore.save(key, user)
         return jsonify(status="ok", message="Welcome back, {0}.".format(username), data={"key":key, "user":user})
